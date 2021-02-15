@@ -4,7 +4,7 @@ var app = express();
 
 // socket.io
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, { cookie: false });
 
 // turn off unnecessary header
 app.disable('x-powered-by');
@@ -29,7 +29,7 @@ io.on('connection', function(socket) {
 	socket.on('send-thought', (data) => {
 		console.log('send-thought received');
 		console.log(data);
-		socket.emit('receive-thought', data);
+		socket.broadcast.emit('receive-thought', data);
 	});
 });
 
